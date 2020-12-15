@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { firebase } from '../firebase';
 
@@ -66,6 +67,10 @@ const Formulario = ({ setTareas }) => {
             </form>
         </>
     );
+};
+
+Formulario.propTypes = {
+    setTareas: PropTypes.func.isRequired
 };
 
 export default Formulario;

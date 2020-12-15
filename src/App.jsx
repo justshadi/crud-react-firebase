@@ -34,12 +34,22 @@ function App() {
 	return (
 		<div className="container">
 			<div className="row">
-				<div className="col-md-6">
+				<div className="col-12">
+
+					<h1 className="text-center">Crud React - Firestore </h1>
+
+					<hr />
+				</div>
+
+				<div className="col-md-6 mb-5 mb-md-0">
 					<Formulario setTareas={setTareas} />
 				</div>
 
-				<div className="col-md-6">
-					<ListadoTareas tareas={tareas} />
+				<div className="col-md-6 mt-5 mt-md-0">
+					<ListadoTareas
+						setTareas={setTareas}
+						tareas={tareas}
+					/>
 				</div>
 			</div>
 		</div>

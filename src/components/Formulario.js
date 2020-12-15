@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import { firebase } from '../firebase';
 
-const Formulario = ({ setTareas }) => {
+const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion }) => {
 
-    const [tarea, setTarea] = useState('');
     const [error, setError] = useState(null);
 
     const handleSubmit = async e => {
@@ -15,7 +14,7 @@ const Formulario = ({ setTareas }) => {
         if (!tarea.trim()) return setError('Escriba algo por favor...');
         setError(null);
 
-        // Gerar nueva tarea
+        // Generar nueva tarea
         const nuevaTarea = {
             name: tarea.trim(),
             fecha: Date.now()
@@ -38,14 +37,48 @@ const Formulario = ({ setTareas }) => {
         setTarea('');
     };
 
+    const handleEditar = async e => {
+        e.preventDefault();
+
+        // Validar
+        if (!tarea.trim()) return setError('Escriba algo por favor...');
+        setError(null);
+
+
+        // Actualizar tarea
+        try {
+
+            const db = firebase.firestore();
+            await db.collection('tareas').doc(edicion.tarea.id).update({
+                name: tarea
+            });
+
+            const arrayEditado = tareas.map(item => item.id === edicion.tarea.id ? { ...item, name: tarea } : item);
+            setTareas(arrayEditado);
+
+            // Resetear edición
+            setEdicion({
+                editando: false,
+                tarea: null
+            });
+
+            setTarea('');
+
+        } catch (error) {
+
+            console.error(error);
+
+        };
+    };
+
     return (
         <>
-            <h2>Formulario</h2>
+            <h2>{edicion.editando ? 'Editar Tarea' : 'Agregar Tarea'}</h2>
 
             <hr />
 
             <form
-                onSubmit={handleSubmit}
+                onSubmit={edicion.editando ? handleEditar : handleSubmit}
             >
 
                 {error && <span className="text-danger">{error}</span>}
@@ -59,10 +92,10 @@ const Formulario = ({ setTareas }) => {
                 />
 
                 <button
-                    className="btn btn-dark btn-block"
+                    className={`btn btn-block ${edicion.editando ? 'btn-warning' : 'btn-dark'}`}
                     type="submit"
                 >
-                    Agregar
+                    {edicion.editando ? 'Editar' : 'Agregar'}
                 </button>
             </form>
         </>
@@ -70,7 +103,12 @@ const Formulario = ({ setTareas }) => {
 };
 
 Formulario.propTypes = {
-    setTareas: PropTypes.func.isRequired
+    tarea: PropTypes.string.isRequired,
+    tareas: PropTypes.array.isRequired,
+    edicion: PropTypes.object.isRequired,
+    setTareas: PropTypes.func.isRequired,
+    setTarea: PropTypes.func.isRequired,
+    setEdicion: PropTypes.func.isRequired
 };
 
 export default Formulario;

@@ -8,6 +8,11 @@ import Formulario from './components/Formulario';
 function App() {
 
 	const [tareas, setTareas] = useState([]);
+	const [tarea, setTarea] = useState('');
+	const [edicion, setEdicion] = useState({
+		editando: false,
+		tarea: null
+	});
 
 	useEffect(() => {
 
@@ -42,13 +47,23 @@ function App() {
 				</div>
 
 				<div className="col-md-6 mb-5 mb-md-0">
-					<Formulario setTareas={setTareas} />
+					<Formulario
+						tarea={tarea}
+						tareas={tareas}
+						edicion={edicion}
+						setEdicion={setEdicion}
+						setTareas={setTareas}
+						setTarea={setTarea}
+					/>
 				</div>
 
 				<div className="col-md-6 mt-5 mt-md-0">
 					<ListadoTareas
-						setTareas={setTareas}
 						tareas={tareas}
+						edicion={edicion}
+						setTareas={setTareas}
+						setTarea={setTarea}
+						setEdicion={setEdicion}
 					/>
 				</div>
 			</div>

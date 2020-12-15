@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Tarea from './Tarea';
 
-const ListadoTareas = ({ tareas, setTareas }) => (
+const ListadoTareas = ({ tareas, edicion, setTareas, setEdicion, setTarea }) => (
     <>
         <h2>Listado de Tareas</h2>
 
@@ -21,7 +21,10 @@ const ListadoTareas = ({ tareas, setTareas }) => (
                         <Tarea
                             tareas={tareas}
                             tarea={tarea}
+                            edicion={edicion}
                             setTareas={setTareas}
+                            setEdicion={setEdicion}
+                            setTarea={setTarea}
                         />
                     </li>
                 ))
@@ -32,7 +35,10 @@ const ListadoTareas = ({ tareas, setTareas }) => (
 
 ListadoTareas.propTypes = {
     tareas: PropTypes.array.isRequired,
-    setTareas: PropTypes.func.isRequired
+    edicion: PropTypes.object.isRequired,
+    setTareas: PropTypes.func.isRequired,
+    setEdicion: PropTypes.func.isRequired,
+    setTarea: PropTypes.func.isRequired
 };
 
 export default ListadoTareas;

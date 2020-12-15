@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 import { firebase } from '../firebase';
 
-const Tarea = ({ tarea, tareas, setTareas }) => {
+const Tarea = ({ tarea, tareas, edicion, setTareas, setEdicion, setTarea }) => {
 
     const { id, name } = tarea;
 
     const eliminarTarea = async id => {
+
         try {
 
             const db = firebase.firestore();
@@ -15,11 +16,33 @@ const Tarea = ({ tarea, tareas, setTareas }) => {
             const nuevasTareas = tareas.filter(tarea => tarea.id !== id);
             setTareas(nuevasTareas);
 
+            if (edicion.tarea) {
+                if (edicion.tarea.id === id) {
+                    // Resetear edición
+                    setEdicion({
+                        editando: false,
+                        tarea: null
+                    });
+
+                    setTarea('');
+                }
+            }
+
         } catch (error) {
 
             console.error(error);
 
         }
+    };
+
+    const editarTarea = tarea => {
+
+        setEdicion({
+            editando: true,
+            tarea
+        });
+
+        setTarea(tarea.name);
     };
 
     return (
@@ -37,6 +60,7 @@ const Tarea = ({ tarea, tareas, setTareas }) => {
 
             <button
                 className="btn btn-outline-warning btn-sm float-right mr-2"
+                onClick={() => editarTarea(tarea)}
             >
                 Editar
             </button>
@@ -46,8 +70,11 @@ const Tarea = ({ tarea, tareas, setTareas }) => {
 
 Tarea.propTypes = {
     tarea: PropTypes.object.isRequired,
+    edicion: PropTypes.object.isRequired,
     tareas: PropTypes.array.isRequired,
-    setTareas: PropTypes.func.isRequired
+    setTareas: PropTypes.func.isRequired,
+    setEdicion: PropTypes.func.isRequired,
+    setTarea: PropTypes.func.isRequired
 };
 
 export default Tarea;

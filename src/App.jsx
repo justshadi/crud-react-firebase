@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { firebase } from './firebase';
 
 import ListadoTareas from './components/ListadoTareas';
+import Formulario from './components/Formulario';
 
 function App() {
 
@@ -34,11 +35,11 @@ function App() {
 		<div className="container">
 			<div className="row">
 				<div className="col-md-6">
-					<ListadoTareas tareas={tareas} />
+					<Formulario setTareas={setTareas} />
 				</div>
 
 				<div className="col-md-6">
-					Hacer Formulario
+					<ListadoTareas tareas={tareas} />
 				</div>
 			</div>
 		</div>

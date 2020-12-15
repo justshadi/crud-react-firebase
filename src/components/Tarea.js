@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Tarea = ({ tarea }) => {
 
-    const { name, fecha } = tarea;
+    const { name } = tarea;
 
     return (
         <>

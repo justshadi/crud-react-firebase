@@ -4,8 +4,9 @@ import { firebase } from './firebase';
 
 import ListadoTareas from './components/ListadoTareas';
 import Formulario from './components/Formulario';
+import Editor from './Editor';
 
-function App() {
+const App = props => {
 
 	const [tareas, setTareas] = useState([]);
 	const [tarea, setTarea] = useState('');
@@ -13,6 +14,24 @@ function App() {
 		editando: false,
 		tarea: null
 	});
+	const[url, setUrl] = useState('');
+
+	/*async function handleSave() {
+	const db = firebase.firestore();
+	await db.collection('tareas').doc(location.state.id).get({
+		saveData:savedData,
+	});}*/
+
+	const gotToNews= () => {
+		//setUrl(tarea)
+		props.history.push(`/news/${edicion.tarea.id}`,{id: edicion.tarea.id, data:'sss'});
+		
+	  };
+	  const editarTarea = tarea =>{
+        gotToNews(`${edicion.tarea.id}`)
+            console.log(`${edicion.tarea.id}`)
+
+    }
 
 	useEffect(() => {
 
@@ -35,13 +54,15 @@ function App() {
 		})();
 
 	}, []);
+	 
+
 
 	return (
 		<div className="container">
 			<div className="row">
 				<div className="col-12">
 
-					<h1 className="text-center">Crud React - Firestore </h1>
+					<h1 className="text-center">Editor React - On  Firestore </h1>
 
 					<hr />
 				</div>
@@ -54,7 +75,16 @@ function App() {
 						setEdicion={setEdicion}
 						setTareas={setTareas}
 						setTarea={setTarea}
+						setUrl={setUrl}
+						gotToNews={gotToNews}
 					/>
+					<button
+                    className={`btn btn-block  ${!edicion.editando ? 'btn-warning' : 'btn-dark'}`}
+                    type="submit"
+                    onClick={() => editarTarea(tarea)}
+                >
+                    {edicion.editando ? 'Editar' : 'Agregar'}
+                </button>
 				</div>
 
 				<div className="col-md-6 mt-5 mt-md-0">
@@ -64,9 +94,11 @@ function App() {
 						setTareas={setTareas}
 						setTarea={setTarea}
 						setEdicion={setEdicion}
+						gotToNews={gotToNews}
 					/>
 				</div>
 			</div>
+			
 		</div>
 	);
 };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { firebase } from '../firebase';
 
-const Tarea = ({ tarea, tareas, edicion, setTareas, setEdicion, setTarea }) => {
+const Tarea = ({ tarea, tareas, edicion, setTareas, setEdicion, setTarea, gotToNews, area }) => {
 
     const { id, name } = tarea;
 
@@ -41,8 +41,9 @@ const Tarea = ({ tarea, tareas, edicion, setTareas, setEdicion, setTarea }) => {
             editando: true,
             tarea
         });
-
-        setTarea(tarea.name);
+        setTarea(tarea.name, tarea.id);
+        //console.log(tarea.id);
+        
     };
 
     return (
@@ -74,7 +75,8 @@ Tarea.propTypes = {
     tareas: PropTypes.array.isRequired,
     setTareas: PropTypes.func.isRequired,
     setEdicion: PropTypes.func.isRequired,
-    setTarea: PropTypes.func.isRequired
+    setTarea: PropTypes.func.isRequired,
+    gotToNews: PropTypes.func.isRequired,
 };
 
 export default Tarea;

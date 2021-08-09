@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { firebase } from '../firebase';
 
-const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion }) => {
+const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion,setUrl,gotToNews }) => {
 
     const [error, setError] = useState(null);
 
@@ -56,10 +56,17 @@ const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion })
             const arrayEditado = tareas.map(item => item.id === edicion.tarea.id ? { ...item, name: tarea } : item);
             setTareas(arrayEditado);
 
+
+            setUrl=tarea ;
+            console.log(edicion.tarea.id)
+            
+           
+
             // Resetear edición
             setEdicion({
                 editando: false,
-                tarea: null
+                tarea: null,
+                
             });
 
             setTarea('');
@@ -70,6 +77,7 @@ const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion })
 
         };
     };
+    
 
     return (
         <>
@@ -97,7 +105,9 @@ const Formulario = ({ tareas, tarea, edicion, setTarea, setTareas, setEdicion })
                 >
                     {edicion.editando ? 'Editar' : 'Agregar'}
                 </button>
+                
             </form>
+            
         </>
     );
 };

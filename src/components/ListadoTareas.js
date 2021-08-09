@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 
 import Tarea from './Tarea';
 
-const ListadoTareas = ({ tareas, edicion, setTareas, setEdicion, setTarea }) => (
+const ListadoTareas = ({ tareas, edicion, setTareas, setEdicion, setTarea, gotToNews }) => (
+   
     <>
+    
         <h2>Listado de Tareas</h2>
-
+        
         <hr />
-
+            
         <ul className="list-group">
 
 
@@ -25,6 +27,8 @@ const ListadoTareas = ({ tareas, edicion, setTareas, setEdicion, setTarea }) => 
                             setTareas={setTareas}
                             setEdicion={setEdicion}
                             setTarea={setTarea}
+                            gotToNews={gotToNews}
+                           
                         />
                     </li>
                 ))
@@ -38,7 +42,9 @@ ListadoTareas.propTypes = {
     edicion: PropTypes.object.isRequired,
     setTareas: PropTypes.func.isRequired,
     setEdicion: PropTypes.func.isRequired,
-    setTarea: PropTypes.func.isRequired
+    setTarea: PropTypes.func.isRequired,
+    gotToNews: PropTypes.func.isRequired,
+    
 };
 
 export default ListadoTareas;

@@ -1,3 +1,2 @@
-# Crud App: React - Firestore
-
-## 👨‍💻 [View Demo](https://crud-react-4a711.web.app/)
+# firbase-react-editor
+CRUD firebase project for example
